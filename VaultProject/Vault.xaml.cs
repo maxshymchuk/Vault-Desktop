@@ -11,12 +11,12 @@ namespace VaultProject
   {
     private const int ID_LENGTH = 16;
 
-    public ObservableCollection<Record> recordList { get; set; }
+    public static ObservableCollection<Record> recordList { get; set; }
     public ObservableCollection<Record> checkedList { get; set; }
 
     private Record editableRecord = null;
     private object regKey = null;
-    private SFile file;
+    public static SFile file;
 
     public Vault()
     {
@@ -75,7 +75,7 @@ namespace VaultProject
       UpdateStatus();
     }
 
-    private void RewriteFile()
+    public static void RewriteFile()
     {
       file.writer.Close();
       file.writer = F.OpenFile(file.path, file.name, FMode.Write, FWriteMode.Rewrite);
@@ -139,7 +139,8 @@ namespace VaultProject
       }
       if (sender == SettingsButton)
       {
-        // nothing
+        Settings settings = new Settings();
+        this.Content = settings;
       }
       UpdateStatus();
     }

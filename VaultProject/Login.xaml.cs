@@ -8,10 +8,13 @@ namespace VaultProject
   /// </summary>
   public partial class Login : Window
   {
+    public static string password;
+
     public Login()
     {
       InitializeComponent();
       Login_Text.Focus();
+      password = "pass";
     }
 
     private void FormDrag(object sender, MouseButtonEventArgs e)
@@ -27,7 +30,7 @@ namespace VaultProject
       }
       if (sender == Login_Enter)
       {
-        if (Login_Text.Password == "pass")
+        if (Login_Text.Password == password)
         {
           (new Vault()).Show();
           Close();

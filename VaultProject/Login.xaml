@@ -13,20 +13,41 @@
         WindowStartupLocation="CenterScreen"
         Background="{x:Null}" ResizeMode="NoResize">
   <Grid>
-    <Image MouseDown="FormDrag" Source="splash2.png"/>
+    <Image x:Name="underGear" MouseDown="FormDrag" Source="under_gear.png" RenderTransformOrigin="0.5, 0.5">
+      <Image.RenderTransform>
+        <RotateTransform Angle="0" />
+      </Image.RenderTransform>
+      <Image.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+          <BeginStoryboard>
+            <Storyboard BeginTime="00:00:01.000">
+              <DoubleAnimation 
+                Storyboard.TargetName="underGear" 
+                Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" 
+                From="0" 
+                To="360" 
+                Duration="00:00:30.000" 
+                RepeatBehavior="Forever"/>
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </Image.Triggers>
+    </Image>
+    <Image x:Name="overGear" MouseDown="FormDrag" Source="over_gear.png"/>
     <PasswordBox
       Name="Login_Text"
       BorderThickness="0"
       Background="Transparent"
       FontSize="30"
       Foreground="Gray"
+      Padding="2"
       HorizontalContentAlignment="Center"
       VerticalContentAlignment="Center"
       FontFamily="./fonts/#Liberator Heavy"
-      Margin="127,174" SelectionOpacity="0.1"/>
+      Margin="143,174" SelectionOpacity="0.1" TabIndex="5"/>
     <Button
       Name="Login_Close"
-      Margin="162,125,162,249"
+      Margin="167,129,167,245"
       Content="CLOSE"
       BorderThickness="0"
       Background="Transparent"
@@ -36,10 +57,10 @@
       Style="{DynamicResource LoginButton}"
       Foreground="Gray"
       FontSize="16"
-      Click="Login_Click"/>
+      Click="Login_Click" TabIndex="2"/>
     <Button
       Name="Login_Enter"
-      Margin="162,249,162,125"
+      Margin="167,245,167,128"
       Content="ENTER"
       BorderThickness="0"
       Background="Transparent"
@@ -49,6 +70,6 @@
       Style="{DynamicResource LoginButton}"
       Foreground="Gray"
       FontSize="16"
-      Click="Login_Click"/>
+      Click="Login_Click" TabIndex="1"/>
   </Grid>
 </Window>

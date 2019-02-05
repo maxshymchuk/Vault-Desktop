@@ -1,0 +1,81 @@
+﻿<Page x:Class="VaultProject.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VaultProject"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Settings" Background="#FF2E2E2E">
+  <Grid Width="500" Background="#FF212121">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto"/>
+        <RowDefinition/>
+        <RowDefinition Height="auto"/>
+      </Grid.RowDefinitions>
+      <Grid Grid.Row="0">
+        <Label Content="SETTINGS" Margin="0,10,0,0" Background="{x:Null}" Foreground="White" HorizontalAlignment="Center" FontSize="36" FontFamily="./fonts/#Liberator Heavy"/>
+      </Grid>
+        <Grid Grid.Row="1">
+          <StackPanel>
+          <Grid x:Name="GridLine0" Margin="0,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+              <Label Margin="20,0" Content="Data Path" Background="{x:Null}" Foreground="White"/>
+            </Grid>
+            <Grid Grid.Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+              </Grid.ColumnDefinitions>
+              <Grid Grid.Column="0">
+                <TextBox Margin="20,0,0,0" x:Name="Settings_DataPath" VerticalContentAlignment="Center" IsReadOnly="True" IsUndoEnabled="False"/>
+              </Grid>
+              <Grid Grid.Column="1">
+                <Button x:Name="Settings_OpenDataPath" Margin="20,0" Width="30" Click="Settings_OpenDataPath_Click"  Content="..."/>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid x:Name="GridLine1" Margin="0,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+              <Label Margin="20,0" Content="Password" Background="{x:Null}" Foreground="White"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <PasswordBox x:Name="Settings_PasswordBox" VerticalContentAlignment="Center" Margin="20,0"/>
+            </Grid>
+          </Grid>
+          <Grid x:Name="GridLine2" Margin="0,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Label Margin="20,0" Content="Secure Word" Background="{x:Null}" Foreground="White"/>
+              </Grid>
+            <Grid Grid.Column="1">
+                <PasswordBox x:Name="Settings_SecureName" VerticalContentAlignment="Center" Margin="20,0"/>
+            </Grid>
+          </Grid>
+        </StackPanel>
+      </Grid>
+      <Grid Grid.Row="2" Height="40">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+          <Button x:Name="Settings_ConfirmButton" Click="Settings_ConfirmButton_Click" Content="CONFIRM" />
+        </Grid>
+        <Grid Grid.Column="1">
+          <Button x:Name="Settings_CancelButton" Content="CANCEL"/>
+        </Grid>
+      </Grid>
+    </Grid>
+</Page>

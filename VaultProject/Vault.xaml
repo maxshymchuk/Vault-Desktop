@@ -101,7 +101,6 @@
         </Grid.ColumnDefinitions>
         <Button 
           x:Name="SettingsButton"
-          IsEnabled="False"
           Grid.Column="0"
           Content="Settings" 
           BorderThickness="0"

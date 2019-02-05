@@ -64,6 +64,9 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Record.cs" />
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UsefulFunctions.cs" />
     <Compile Include="Vault.xaml.cs">
       <DependentUpon>Vault.xaml</DependentUpon>
@@ -80,6 +83,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vault.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,7 +131,8 @@
     <Resource Include="images\save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="splash2.png" />
+    <Resource Include="over_gear.png" />
+    <Resource Include="under_gear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
