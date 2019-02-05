@@ -15,7 +15,6 @@ namespace VaultProject
     public ObservableCollection<Record> checkedList { get; set; }
 
     private Record editableRecord = null;
-    private object regKey = null;
     public static SFile file;
 
     public Vault()
@@ -53,19 +52,27 @@ namespace VaultProject
     {
       // FILE STRUCTURE
       // id-of-element:note\tpass
-      file.name = "data";
-      F.CreateDir(file.path = $"{Environment.ExpandEnvironmentVariables("%appdata%")}\\Vault");
+      file.name = R.Get("FileName");
+      F.CreateDir(file.path = R.Get("DataPath"));
+      if (file.writer != null) file.writer.Close();
       file.reader = F.OpenFile(file.path, file.name, FMode.Read);
       recordList = new ObservableCollection<Record>();
       while (!file.reader.EndOfStream)
       {
-        string line = Crypto.Decrypt(file.reader.ReadLine());
-        var (id, note, pass) = (
-          line.Substring(0, ID_LENGTH), 
-          line.Substring(ID_LENGTH + 1, line.IndexOf('\t') - ID_LENGTH - 1), 
-          line.Substring(line.IndexOf('\t') + 1)
-        );
-        recordList.Add(new Record() { Id = id, Note = note, Pass = pass });
+        string decryptResult = Crypto.Decrypt(file.reader.ReadLine());
+        if (decryptResult != "")
+        {
+          var (id, note, pass) = (
+            decryptResult.Substring(0, ID_LENGTH),
+            decryptResult.Substring(ID_LENGTH + 1, decryptResult.IndexOf('\t') - ID_LENGTH - 1),
+            decryptResult.Substring(decryptResult.IndexOf('\t') + 1)
+          );
+          recordList.Add(new Record() { Id = id, Note = note, Pass = pass });
+        }
+        else
+        {
+          break;
+        }
       }
       file.reader.Close();
       file.writer = F.OpenFile(file.path, file.name, FMode.Write);
@@ -83,6 +90,15 @@ namespace VaultProject
       {
         file.writer.WriteLine(Crypto.Encrypt($"{rec.Id}:{rec.Note}\t{rec.Pass}"));
       }
+      file.writer.Close();
+      file.writer = F.OpenFile(file.path, file.name, FMode.Write, FWriteMode.Append);
+    }
+
+    public static void EraseData()
+    {
+      recordList.Clear();
+      file.writer.Close();
+      file.writer = F.OpenFile(file.path, file.name, FMode.Write, FWriteMode.Rewrite);
       file.writer.Close();
       file.writer = F.OpenFile(file.path, file.name, FMode.Write, FWriteMode.Append);
     }
@@ -139,8 +155,8 @@ namespace VaultProject
       }
       if (sender == SettingsButton)
       {
-        Settings settings = new Settings();
-        this.Content = settings;
+        (new Settings()).Show();
+        this.Close();
       }
       UpdateStatus();
     }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VaultProject"
         mc:Ignorable="d"
-        Title="Vault" Height="450" Width="800" MinHeight="400" MinWidth="600" Closing="Window_Closing">
+        Title="Vault" Height="450" Width="800" MinHeight="400" MinWidth="600" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
   <Grid Background="#FF363636">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="200"/>
@@ -20,23 +20,31 @@
       </Grid.RowDefinitions>
       <Grid Grid.Row="0" Margin="10,0">
         <StackPanel x:Name="ControlPanel">
-          <Label x:Name="StatusLabel" Content="Checked X/X" Foreground="#FFDDDDDD"/>
-          <Label Content="Note" Foreground="#FFDDDDDD"/>
+          <Label Padding="0,5" x:Name="StatusLabel" Content="Checked X/X" Foreground="#FFDDDDDD"/>
+          <Label Padding="0,5" Content="Note" Foreground="#FFDDDDDD"/>
           <TextBox 
             x:Name="NoteText"
             MaxLength="64"
-            Background="Transparent"
-            BorderThickness="0,0,0,1"
-            Margin="0,0,0,10"
-            Padding="0,0,0,5" Foreground="#FFDDDDDD" FontSize="16"/>
-          <Label Content="Pass" Foreground="#FFDDDDDD"/>
+            Background="#FF363636"
+            BorderThickness="5,0,0,0"
+            BorderBrush="#FF232323"
+            VerticalContentAlignment="Center"
+            Foreground="#FFDDDDDD" 
+            Padding="3"
+            FontSize="14">
+          </TextBox>
+          <Label Padding="0,5" Content="Pass" Foreground="#FFDDDDDD"/>
           <PasswordBox 
             x:Name="PassText"
             MaxLength="64"
-            Background="Transparent"
-            BorderThickness="0,0,0,1"
-            Padding="0,0,0,5"
-            PasswordChar="•" Foreground="#FFDDDDDD" FontSize="16"/>
+            Background="#FF363636"
+            BorderThickness="5,0,0,0"
+            BorderBrush="#FF232323"
+            Padding="3"
+            PasswordChar="•" 
+            Foreground="#FFDDDDDD" 
+            FontSize="14">
+          </PasswordBox>
           <Button
             x:Name="EditControl_SaveButton" 
             Content="Save"

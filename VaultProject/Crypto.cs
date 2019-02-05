@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.IO;
 using System;
 using System.Linq;
+using System.Windows;
 
 namespace VaultProject
 {
@@ -12,7 +13,6 @@ namespace VaultProject
     // We divide this by 8 within the code below to get the equivalent number of bytes.
     private const int Keysize = 256;
 
-    public static string passPhrase = "allahakbar";
     // This constant determines the number of iterations for the password bytes generation function.
     private const int DerivationIterations = 1000;
 
@@ -23,7 +23,7 @@ namespace VaultProject
       var saltStringBytes = Generate256BitsOfRandomEntropy();
       var ivStringBytes = Generate256BitsOfRandomEntropy();
       var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-      using (var password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
+      using (var password = new Rfc2898DeriveBytes(R.Get("SecureWord"), saltStringBytes, DerivationIterations))
       {
         var keyBytes = password.GetBytes(Keysize / 8);
         using (var symmetricKey = new RijndaelManaged())
@@ -65,29 +65,40 @@ namespace VaultProject
       // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
       var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
 
-      using (var password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
+      try
       {
-        var keyBytes = password.GetBytes(Keysize / 8);
-        using (var symmetricKey = new RijndaelManaged())
+        using (var password = new Rfc2898DeriveBytes(R.Get("SecureWord"), saltStringBytes, DerivationIterations))
         {
-          symmetricKey.BlockSize = 256;
-          symmetricKey.Mode = CipherMode.CBC;
-          symmetricKey.Padding = PaddingMode.PKCS7;
-          using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
+          var keyBytes = password.GetBytes(Keysize / 8);
+          using (var symmetricKey = new RijndaelManaged())
           {
-            using (var memoryStream = new MemoryStream(cipherTextBytes))
+            symmetricKey.BlockSize = 256;
+            symmetricKey.Mode = CipherMode.CBC;
+            symmetricKey.Padding = PaddingMode.PKCS7;
+            using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
             {
-              using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+              using (var memoryStream = new MemoryStream(cipherTextBytes))
               {
-                var plainTextBytes = new byte[cipherTextBytes.Length];
-                var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
-                memoryStream.Close();
-                cryptoStream.Close();
-                return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                {
+                  var plainTextBytes = new byte[cipherTextBytes.Length];
+                  int decryptedByteCount = 0;
+                
+                    decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                
+                  memoryStream.Close();
+                  cryptoStream.Close();
+                  return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                }
               }
             }
           }
         }
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show($"Can't decrypt data:\n{e.Message}");
+        return "";
       }
     }
 

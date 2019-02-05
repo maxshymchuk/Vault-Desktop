@@ -1,81 +1,131 @@
-﻿<Page x:Class="VaultProject.Settings"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:VaultProject"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Settings" Background="#FF2E2E2E">
-  <Grid Width="500" Background="#FF212121">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="auto"/>
-        <RowDefinition/>
-        <RowDefinition Height="auto"/>
-      </Grid.RowDefinitions>
-      <Grid Grid.Row="0">
-        <Label Content="SETTINGS" Margin="0,10,0,0" Background="{x:Null}" Foreground="White" HorizontalAlignment="Center" FontSize="36" FontFamily="./fonts/#Liberator Heavy"/>
-      </Grid>
-        <Grid Grid.Row="1">
-          <StackPanel>
-          <Grid x:Name="GridLine0" Margin="0,10">
+﻿<Window x:Class="VaultProject.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VaultProject"
+        mc:Ignorable="d"
+        Title="Settings" Height="450" Width="800" Background="#FF2E2E2E" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+  <Grid Width="500">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition/>
+      <RowDefinition Height="auto"/>
+    </Grid.RowDefinitions>
+    <Grid Grid.Row="0">
+      <Label Content="SETTINGS" Margin="0,10,0,0" Background="{x:Null}" Foreground="White" HorizontalAlignment="Center" FontSize="36" FontFamily="./fonts/#Liberator Heavy"/>
+    </Grid>
+    <Grid Grid.Row="1">
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <StackPanel>
+        <Grid x:Name="GridLine0" Margin="0,10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <Grid Grid.Column="0">
+            <Label Margin="20,0" Content="Data Path" Background="{x:Null}" Foreground="White"/>
+          </Grid>
+          <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
-              <ColumnDefinition/>
+              <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-              <Label Margin="20,0" Content="Data Path" Background="{x:Null}" Foreground="White"/>
+              <TextBox Margin="20,0,0,0" x:Name="Settings_DataPath" VerticalContentAlignment="Center" IsReadOnly="True" IsUndoEnabled="False"/>
             </Grid>
             <Grid Grid.Column="1">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-              </Grid.ColumnDefinitions>
-              <Grid Grid.Column="0">
-                <TextBox Margin="20,0,0,0" x:Name="Settings_DataPath" VerticalContentAlignment="Center" IsReadOnly="True" IsUndoEnabled="False"/>
-              </Grid>
-              <Grid Grid.Column="1">
-                <Button x:Name="Settings_OpenDataPath" Margin="20,0" Width="30" Click="Settings_OpenDataPath_Click"  Content="..."/>
-              </Grid>
+              <Button x:Name="Settings_OpenDataPath" Margin="20,0" Width="30" Click="Settings_OpenDataPath_Click"  Content="..."/>
             </Grid>
           </Grid>
-          <Grid x:Name="GridLine1" Margin="0,10">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition/>
-              <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-              <Label Margin="20,0" Content="Password" Background="{x:Null}" Foreground="White"/>
-            </Grid>
-            <Grid Grid.Column="1">
-                <PasswordBox x:Name="Settings_PasswordBox" VerticalContentAlignment="Center" Margin="20,0"/>
-            </Grid>
-          </Grid>
-          <Grid x:Name="GridLine2" Margin="0,10">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition/>
-              <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Label Margin="20,0" Content="Secure Word" Background="{x:Null}" Foreground="White"/>
-              </Grid>
-            <Grid Grid.Column="1">
-                <PasswordBox x:Name="Settings_SecureName" VerticalContentAlignment="Center" Margin="20,0"/>
-            </Grid>
-          </Grid>
-        </StackPanel>
-      </Grid>
-      <Grid Grid.Row="2" Height="40">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition/>
-          <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-          <Button x:Name="Settings_ConfirmButton" Click="Settings_ConfirmButton_Click" Content="CONFIRM" />
         </Grid>
-        <Grid Grid.Column="1">
-          <Button x:Name="Settings_CancelButton" Content="CANCEL"/>
+        <Grid x:Name="GridLine1" Margin="0,10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <Grid Grid.Column="0">
+            <Label Margin="20,0" Content="File Name" Background="{x:Null}" Foreground="White"/>
+          </Grid>
+          <Grid Grid.Column="1">
+            <TextBox Margin="20,0" x:Name="Settings_FileName" VerticalContentAlignment="Center"/>
+          </Grid>
         </Grid>
+
+        <Grid x:Name="GridLine2" Margin="0,10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <Grid Grid.Column="0">
+            <Label Margin="20,0" Content="Password" Background="{x:Null}" Foreground="White"/>
+          </Grid>
+          <Grid Grid.Column="1">
+            <PasswordBox x:Name="Settings_PasswordBox" VerticalContentAlignment="Center" Margin="20,0"/>
+          </Grid>
+        </Grid>
+        <Grid x:Name="GridLine3" Margin="0,10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <Grid Grid.Column="0">
+            <TextBlock VerticalAlignment="Center" Margin="20,0" Background="{x:Null}" Foreground="White" TextWrapping="Wrap">
+              <TextBlock.Text>
+                This will change the current codeword and overwrite the connected file with new parameters.
+              </TextBlock.Text>
+            </TextBlock>
+          </Grid>
+          <Grid Grid.Column="1" VerticalAlignment="Top">
+            <Button x:Name="Settings_SecureWordButton" Click="Settings_ButtonClick" Content="UPDATE SECURE CODE" Height="26"  Margin="20,0"/>
+          </Grid>
+        </Grid>
+        <Grid x:Name="GridLine4" Margin="0,10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <Grid Grid.Column="0">
+            <TextBlock VerticalAlignment="Center" Margin="20,0" Background="{x:Null}" Foreground="White" TextWrapping="Wrap">
+              <TextBlock.Text>
+                AutoRun - will run with the computer
+              </TextBlock.Text>
+            </TextBlock>
+          </Grid>
+          <Grid Grid.Column="1">
+            <Button x:Name="Settings_AutoRunButton" Click="Settings_ButtonClick" Content="SET" Height="26"  Margin="20,0"/>
+          </Grid>
+        </Grid>
+        <Grid x:Name="GridLine5" Margin="0,10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <Grid Grid.Column="0">
+            <TextBlock VerticalAlignment="Center" Margin="20,0" Background="{x:Null}" Foreground="White" TextWrapping="Wrap">
+              <TextBlock.Text>
+                It will delete ALL your data, be careful
+              </TextBlock.Text>
+            </TextBlock>
+          </Grid>
+          <Grid Grid.Column="1">
+            <Button x:Name="Settings_EraseButton" Content="ERASE" Click="Settings_ButtonClick" Height="26"  Margin="20,0"/>
+          </Grid>
+        </Grid>
+      </StackPanel>
+      </ScrollViewer>
+    </Grid>
+    <Grid Grid.Row="2" Height="40">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <Grid Grid.Column="0">
+        <Button x:Name="Settings_ConfirmButton" Click="Settings_ConfirmButton_Click" Content="CONFIRM" />
+      </Grid>
+      <Grid Grid.Column="1">
+        <Button x:Name="Settings_CancelButton" Click="Settings_CancelButton_Click"  Content="CANCEL"/>
       </Grid>
     </Grid>
-</Page>
+  </Grid>
+</Window>

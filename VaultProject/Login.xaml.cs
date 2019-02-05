@@ -8,13 +8,14 @@ namespace VaultProject
   /// </summary>
   public partial class Login : Window
   {
-    public static string password;
+    private string password;
 
     public Login()
     {
       InitializeComponent();
       Login_Text.Focus();
-      password = "pass";
+      R.Init();
+      password = R.Get("Password");
     }
 
     private void FormDrag(object sender, MouseButtonEventArgs e)
