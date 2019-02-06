@@ -19,7 +19,7 @@ namespace VaultProject
         key = Registry.CurrentUser.CreateSubKey(@"Software\Vault");
         Set("DataPath", $"{Environment.ExpandEnvironmentVariables("%appdata%")}\\Vault");
         Set("FileName", "data");
-        Set("Password", "pass");
+        Set("Password", Crypto.Encrypt("pass", CryptoMode.Password));
         Set("SecureWord", UsefulFunctions.GetUniqueKey(32));
       }
     }

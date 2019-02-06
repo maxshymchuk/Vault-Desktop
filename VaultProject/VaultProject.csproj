@@ -130,14 +130,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\add.png" />
-    <Resource Include="images\copy.png" />
-    <Resource Include="images\delete.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\save.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="over_gear.png" />
     <Resource Include="under_gear.png" />
   </ItemGroup>

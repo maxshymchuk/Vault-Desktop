@@ -20,7 +20,7 @@
       <Image.Triggers>
         <EventTrigger RoutedEvent="Loaded">
           <BeginStoryboard>
-            <Storyboard BeginTime="00:00:01.000">
+            <Storyboard BeginTime="00:00:00.000">
               <DoubleAnimation 
                 Storyboard.TargetName="underGear" 
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" 
@@ -60,7 +60,7 @@
       Click="Login_Click" TabIndex="2"/>
     <Button
       Name="Login_Enter"
-      Margin="167,245,167,128"
+      Margin="167,246,167,128"
       Content="ENTER"
       BorderThickness="0"
       Background="Transparent"

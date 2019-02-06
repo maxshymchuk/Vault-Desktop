@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Microsoft.Win32;
+﻿using System.Windows;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace VaultProject
@@ -23,7 +10,7 @@ namespace VaultProject
       InitializeComponent();
       Settings_DataPath.Text = R.Get("DataPath");
       Settings_FileName.Text = R.Get("FileName");
-      Settings_PasswordBox.Password = R.Get("Password");
+      Settings_PasswordBox.Password = Crypto.Decrypt(R.Get("Password"), CryptoMode.Password);
       Settings_AutoRunButton.Content = R.IsAutoRunSet() ? "UNSET" : "SET";
     }
 
@@ -36,7 +23,7 @@ namespace VaultProject
       }
       if (Settings_PasswordBox.Password != "")
       {
-        R.Set("Password", Settings_PasswordBox.Password);
+        R.Set("Password", Crypto.Encrypt(Settings_PasswordBox.Password, CryptoMode.Password));
       }
       Settings_Close();
     }
@@ -83,7 +70,7 @@ namespace VaultProject
       }
       if (sender == Settings_SecureWordButton)
       {
-        string newSecureWord = UsefulFunctions.GetUniqueKey(16);
+        string newSecureWord = UsefulFunctions.GetUniqueKey(32);
         R.Set("SecureWord", newSecureWord);
         Vault.RewriteFile();
       }

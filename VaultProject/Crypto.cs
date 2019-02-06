@@ -5,6 +5,11 @@ using System;
 using System.Linq;
 using System.Windows;
 
+public enum CryptoMode
+{
+  Password, Record
+}
+
 namespace VaultProject
 {
   public static class Crypto
@@ -13,17 +18,22 @@ namespace VaultProject
     // We divide this by 8 within the code below to get the equivalent number of bytes.
     private const int Keysize = 256;
 
+    private const string passWord = "VaultPassword";
+
     // This constant determines the number of iterations for the password bytes generation function.
     private const int DerivationIterations = 1000;
 
-    public static string Encrypt(string plainText)
+    public static string Encrypt(string plainText, CryptoMode mode = CryptoMode.Record)
     {
       // Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
       // so that the same Salt and IV values can be used when decrypting.  
       var saltStringBytes = Generate256BitsOfRandomEntropy();
       var ivStringBytes = Generate256BitsOfRandomEntropy();
       var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-      using (var password = new Rfc2898DeriveBytes(R.Get("SecureWord"), saltStringBytes, DerivationIterations))
+
+      string secureWord = mode == CryptoMode.Password ? passWord : R.Get("SecureWord");
+
+      using (var password = new Rfc2898DeriveBytes(secureWord, saltStringBytes, DerivationIterations))
       {
         var keyBytes = password.GetBytes(Keysize / 8);
         using (var symmetricKey = new RijndaelManaged())
@@ -53,7 +63,7 @@ namespace VaultProject
       }
     }
 
-    public static string Decrypt(string cipherText)
+    public static string Decrypt(string cipherText, CryptoMode mode = CryptoMode.Record)
     {
       // Get the complete stream of bytes that represent:
       // [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
@@ -65,9 +75,11 @@ namespace VaultProject
       // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
       var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
 
+      string secureWord = mode == CryptoMode.Password ? passWord : R.Get("SecureWord");
+
       try
       {
-        using (var password = new Rfc2898DeriveBytes(R.Get("SecureWord"), saltStringBytes, DerivationIterations))
+        using (var password = new Rfc2898DeriveBytes(secureWord, saltStringBytes, DerivationIterations))
         {
           var keyBytes = password.GetBytes(Keysize / 8);
           using (var symmetricKey = new RijndaelManaged())

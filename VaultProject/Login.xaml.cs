@@ -15,7 +15,7 @@ namespace VaultProject
       InitializeComponent();
       Login_Text.Focus();
       R.Init();
-      password = R.Get("Password");
+      password = Crypto.Decrypt(R.Get("Password"), CryptoMode.Password);
     }
 
     private void FormDrag(object sender, MouseButtonEventArgs e)
