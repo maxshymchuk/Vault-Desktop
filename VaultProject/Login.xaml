@@ -11,7 +11,8 @@
         AllowsTransparency="True" 
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Background="{x:Null}" ResizeMode="NoResize">
+        Background="{x:Null}" 
+        ResizeMode="NoResize">
   <Grid>
     <Image x:Name="underGear" MouseDown="FormDrag" Source="under_gear.png" RenderTransformOrigin="0.5, 0.5">
       <Image.RenderTransform>

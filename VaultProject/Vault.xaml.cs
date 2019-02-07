@@ -17,10 +17,41 @@ namespace VaultProject
     private Record editableRecord = null;
     public static SFile file;
 
+    Settings settings = null;
+
     public Vault()
     {
       InitializeComponent();
       Loaded += Vault_Loaded;
+      R.Init();
+      Login login = new Login(new App.D_IsLogin(OnLogin));
+    }
+
+    private void OnLogin(LoginCallback callback)
+    {
+      switch (callback)
+      {
+        case LoginCallback.Passed:
+          Show();
+          Visibility = Visibility.Visible;
+          break;
+        case LoginCallback.NotPassed:
+          Hide();
+          Visibility = Visibility.Hidden;
+          break;
+        case LoginCallback.Shutdown:
+          Close();
+          break;
+      }
+    }
+
+    private void OnSetupOver(bool isOver = false)
+    {
+      if (isOver)
+      {
+        settings = null;
+        IsEnabled = true;
+      }
     }
 
     private void EditControl_Click(object sender, RoutedEventArgs e)
@@ -118,7 +149,7 @@ namespace VaultProject
           PassText.Password = "";
         }
       }
-      if (sender == DeleteButton && checkedList != null)
+      else if (sender == DeleteButton && checkedList != null)
       {
         foreach (Record rec in checkedList)
         {
@@ -127,12 +158,12 @@ namespace VaultProject
         checkedList = new ObservableCollection<Record>();
         RewriteFile();
       }
-      if (sender == SyncButton)
+      else if (sender == SyncButton)
       {
         //var wc = new WebClient();
         //wc.DownloadFile("https://b5wliw.db.files.1drv.com/y4mhh9ejh9k50uGN-Dnrd7AFP9fMfavttXYklwf5x6rQxg5p6ceQU1ZAC_WyNLNAsp248lMIf1ODeMJVVvG07X40ZNbhhLAKeINUTYrhpgZSyzomGKyIBfzeG9I0_1w-mJXi9PWTXksYwIQwsjgZmE-gW1yXPot61BSPw4nygG1IWY5W5zfExzAXXZZN8RsJOzS/list.txt?download&psid=1", "text.txt");
       }
-      if (sender == SelectButton && recordList != null)
+      else if (sender == SelectButton && recordList != null)
       {
         foreach (Record rec in recordList)
         {
@@ -140,7 +171,7 @@ namespace VaultProject
           rec.IsChecked = true;
         }
       }
-      if (sender == UnselectButton)
+      else if (sender == UnselectButton)
       {
         checkedList = new ObservableCollection<Record>();
         foreach (Record rec in recordList)
@@ -148,15 +179,18 @@ namespace VaultProject
           rec.IsChecked = false;
         }
       }
-      if (sender == LogoutButton)
+      else if (sender == LogoutButton)
       {
-        (new Login()).Show();
-        Close();
+        Login login = new Login(new App.D_IsLogin(OnLogin));
       }
-      if (sender == SettingsButton)
+      else if (sender == SettingsButton)
       {
-        (new Settings()).Show();
-        this.Close();
+        if (settings == null)
+        {
+          IsEnabled = false;
+          settings = new Settings(new App.D_IsSetupOver(OnSetupOver));
+          settings.Show();
+        }
       }
       UpdateStatus();
     }
@@ -205,7 +239,8 @@ namespace VaultProject
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
-      file.writer.Close();
+      if (file.reader != null) file.reader.Close();
+      if (file.writer != null) file.writer.Close();
     }
   }
 }

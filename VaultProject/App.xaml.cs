@@ -8,10 +8,9 @@ using System.Windows;
 
 namespace VaultProject
 {
-  /// <summary>
-  /// Логика взаимодействия для App.xaml
-  /// </summary>
   public partial class App : Application
   {
+    public delegate void D_IsLogin(LoginCallback callback);
+    public delegate void D_IsSetupOver(bool isOver);
   }
 }

@@ -5,13 +5,16 @@ namespace VaultProject
 {
   public partial class Settings : Window
   {
-    public Settings()
+
+    private App.D_IsSetupOver _delegate;
+    public Settings(App.D_IsSetupOver sender)
     {
       InitializeComponent();
       Settings_DataPath.Text = R.Get("DataPath");
       Settings_FileName.Text = R.Get("FileName");
       Settings_PasswordBox.Password = Crypto.Decrypt(R.Get("Password"), CryptoMode.Password);
       Settings_AutoRunButton.Content = R.IsAutoRunSet() ? "UNSET" : "SET";
+      _delegate = sender;
     }
 
     private void Settings_ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -21,16 +24,8 @@ namespace VaultProject
         R.Set("DataPath", Settings_DataPath.Text);
         R.Set("FileName", Settings_FileName.Text);
       }
-      if (Settings_PasswordBox.Password != "")
-      {
-        R.Set("Password", Crypto.Encrypt(Settings_PasswordBox.Password, CryptoMode.Password));
-      }
-      Settings_Close();
-    }
-
-    private void Settings_Close()
-    {
-      this.Close();
+      R.Set("Password", Crypto.Encrypt(Settings_PasswordBox.Password, CryptoMode.Password));
+      Close();
     }
 
     private void Settings_OpenDataPath_Click(object sender, RoutedEventArgs e)
@@ -82,12 +77,12 @@ namespace VaultProject
 
     private void Settings_CancelButton_Click(object sender, RoutedEventArgs e)
     {
-      Settings_Close();
+      Close();
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
-      (new Vault()).Show();
+      _delegate(true);
     }
   }
 }
