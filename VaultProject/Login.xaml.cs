@@ -35,7 +35,10 @@ namespace VaultProject
 
     private void FormDrag(object sender, MouseButtonEventArgs e)
     { 
-      DragMove();
+      if (e.LeftButton == MouseButtonState.Pressed)
+      {
+        DragMove();
+      }
     }
 
     private void Login_Click(object sender, RoutedEventArgs e)

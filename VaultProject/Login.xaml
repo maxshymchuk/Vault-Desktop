@@ -14,26 +14,7 @@
         Background="{x:Null}" 
         ResizeMode="NoResize">
   <Grid>
-    <Image x:Name="underGear" MouseDown="FormDrag" Source="under_gear.png" RenderTransformOrigin="0.5, 0.5">
-      <Image.RenderTransform>
-        <RotateTransform Angle="0" />
-      </Image.RenderTransform>
-      <Image.Triggers>
-        <EventTrigger RoutedEvent="Loaded">
-          <BeginStoryboard>
-            <Storyboard BeginTime="00:00:00.000">
-              <DoubleAnimation 
-                Storyboard.TargetName="underGear" 
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" 
-                From="0" 
-                To="360" 
-                Duration="00:00:30.000" 
-                RepeatBehavior="Forever"/>
-            </Storyboard>
-          </BeginStoryboard>
-        </EventTrigger>
-      </Image.Triggers>
-    </Image>
+    <Image x:Name="underGear" MouseDown="FormDrag" Source="under_gear.png"/>
     <Image x:Name="overGear" MouseDown="FormDrag" Source="over_gear.png"/>
     <PasswordBox
       Name="Login_Text"

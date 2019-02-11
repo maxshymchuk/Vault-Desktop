@@ -168,11 +168,11 @@
             </Grid.ColumnDefinitions>
             <CheckBox x:Name="checkbox" Tag="{Binding Id}" Click="CheckBox_Click" IsChecked="{Binding IsChecked}" Grid.Column="0" Margin="5,0,2,0" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="1" Text="{Binding Note}" Margin="5,0" VerticalAlignment="Center"/>
-            <TextBlock MinWidth="220" HorizontalAlignment="Right" Padding="5,2" Foreground="#FF232323" Background="#FF232323" Grid.Column="2" Text="{Binding Pass}" Margin="5,0" VerticalAlignment="Center">
+            <TextBlock MinWidth="220" HorizontalAlignment="Right" Padding="5,2" Foreground="#FF232323" Background="#FF232323" FontFamily="#Courier New" Grid.Column="2" Text="{Binding Pass}" Margin="5,0" VerticalAlignment="Center">
               <TextBlock.Triggers>
                 <EventTrigger RoutedEvent="TextBlock.MouseEnter">
                   <BeginStoryboard>
-                    <Storyboard>
+                    <Storyboard BeginTime="00:00:00.500">
                       <ColorAnimation 
                         To="#FFDDDDDD" 
                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" 

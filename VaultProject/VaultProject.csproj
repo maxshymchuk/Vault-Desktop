@@ -137,18 +137,6 @@
     <Resource Include="under_gear.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="under_gear_LOi_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="under_gear_RTV_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="under_gear1_QCw_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="under_gear1__1__IE8_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
