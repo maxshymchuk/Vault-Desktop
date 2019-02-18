@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Collections.Generic;
 
 namespace VaultProject
 {
@@ -241,6 +242,21 @@ namespace VaultProject
     {
       if (file.reader != null) file.reader.Close();
       if (file.writer != null) file.writer.Close();
+    }
+
+    private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+      string word = (sender as TextBox).Text.ToLower();
+      IEnumerable<Record> searchList = null;
+      searchList = recordList.Where(rec => rec.Note.ToLower().Contains(word));
+      if (word != "")
+      {
+        listbox.ItemsSource = searchList;
+      }
+      else
+      {
+        listbox.ItemsSource = recordList;
+      }
     }
   }
 }

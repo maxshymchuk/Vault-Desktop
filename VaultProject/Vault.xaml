@@ -31,8 +31,7 @@
             VerticalContentAlignment="Center"
             Foreground="#FFDDDDDD" 
             Padding="3"
-            FontSize="14">
-          </TextBox>
+            FontSize="14"/>
           <Label Padding="0,5" Content="Pass" Foreground="#FFDDDDDD"/>
           <PasswordBox 
             x:Name="PassText"
@@ -131,74 +130,95 @@
           Click="Button_Click"/>
       </Grid>
     </Grid>
-    <ListBox 
-      x:Name="listbox" 
-      Grid.Column="1" 
-      BorderThickness="0" 
-      HorizontalContentAlignment="Stretch"
-      AlternationCount="2" 
-      Background="{x:Null}"
-      Foreground="#FFDDDDDD" 
-      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-      Style="{DynamicResource ListBoxStyle}">
-      <ListBox.ItemContainerStyle>
-        <Style TargetType="ListBoxItem">
-          <Setter Property="Padding" Value="0"/>
-          <Setter Property="Margin" Value="0"/>
-          <Setter Property="BorderThickness" Value="0"/>
-          <Style.Triggers>
-            <Trigger Property="ListBox.AlternationIndex" Value="1">
-              <Setter Property="Background" Value="Transparent"/>
-            </Trigger>
-            <Trigger Property="ListBox.AlternationIndex" Value="0">
-              <Setter Property="Background" Value="#22000000"/>
-            </Trigger>
-          </Style.Triggers>
-        </Style>
-      </ListBox.ItemContainerStyle>
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <Grid Height="30">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="auto"/>
-              <ColumnDefinition MaxWidth="500"/>
-              <ColumnDefinition/>
-              <ColumnDefinition Width="auto"/>
-              <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <CheckBox x:Name="checkbox" Tag="{Binding Id}" Click="CheckBox_Click" IsChecked="{Binding IsChecked}" Grid.Column="0" Margin="5,0,2,0" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="1" Text="{Binding Note}" Margin="5,0" VerticalAlignment="Center"/>
-            <TextBlock MinWidth="220" HorizontalAlignment="Right" Padding="5,2" Foreground="#FF232323" Background="#FF232323" FontFamily="#Courier New" Grid.Column="2" Text="{Binding Pass}" Margin="5,0" VerticalAlignment="Center">
-              <TextBlock.Triggers>
-                <EventTrigger RoutedEvent="TextBlock.MouseEnter">
-                  <BeginStoryboard>
-                    <Storyboard BeginTime="00:00:00.500">
-                      <ColorAnimation 
-                        To="#FFDDDDDD" 
-                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" 
-                        Duration="0:0:.2"/>
-                    </Storyboard>
-                  </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="TextBlock.MouseLeave">
-                  <BeginStoryboard>
-                    <Storyboard>
-                      <ColorAnimation 
-                        To="#FF232323" 
-                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" 
-                        Duration="0:0:.1"/>
-                    </Storyboard>
-                  </BeginStoryboard>
-                </EventTrigger>
-              </TextBlock.Triggers>
-            </TextBlock>
-            <Button Content="E" Tag="{Binding Id}" Click="RecordEdit_Click" Style="{StaticResource CustomButtonStyle}" Grid.Column="3" Width="20" Height="20" Margin="5,0" Cursor="Hand" VerticalAlignment="Center"/>
-            <Button Content="C" Tag="{Binding Id}" Click="RecordCopy_Click" Style="{StaticResource CustomButtonStyle}" Grid.Column="4" Width="20" Height="20" Margin="5,0,10,0" Cursor="Hand" VerticalAlignment="Center"/>
-          </Grid>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
+    <Grid Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto"/>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+      <Grid Grid.Row="0" Background="#26FFFFFF">
+        <TextBox
+          Height="25"
+          Margin="0,10,10,10"
+          Background="#FF363636"
+          BorderThickness="5,0,0,0"
+          BorderBrush="#FF232323"
+          VerticalContentAlignment="Center"
+          Foreground="#FFDDDDDD" 
+          Padding="3"
+          FontSize="14" 
+          TextChanged="TextBox_TextChanged"/>
+      </Grid>
+      <Grid Grid.Row="1">
+        <ListBox 
+          x:Name="listbox" 
+          Grid.Column="1" 
+          BorderThickness="0" 
+          HorizontalContentAlignment="Stretch"
+          AlternationCount="2" 
+          Background="{x:Null}"
+          Foreground="#FFDDDDDD" 
+          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+          Style="{DynamicResource ListBoxStyle}">
+          <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+              <Setter Property="Padding" Value="0"/>
+              <Setter Property="Margin" Value="0"/>
+              <Setter Property="BorderThickness" Value="0"/>
+              <Style.Triggers>
+                <Trigger Property="ListBox.AlternationIndex" Value="1">
+                  <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+                <Trigger Property="ListBox.AlternationIndex" Value="0">
+                  <Setter Property="Background" Value="#22000000"/>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </ListBox.ItemContainerStyle>
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Grid Height="30">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="auto"/>
+                  <ColumnDefinition MaxWidth="500"/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition Width="auto"/>
+                  <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox x:Name="checkbox" Tag="{Binding Id}" Click="CheckBox_Click" IsChecked="{Binding IsChecked}" Grid.Column="0" Margin="5,0,2,0" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="{Binding Note}" Margin="5,0" VerticalAlignment="Center"/>
+                <TextBlock MinWidth="220" HorizontalAlignment="Right" Padding="5,2" Foreground="#FF232323" Background="#FF232323" FontFamily="#Courier New" Grid.Column="2" Text="{Binding Pass}" Margin="5,0" VerticalAlignment="Center">
+                  <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="TextBlock.MouseEnter">
+                      <BeginStoryboard>
+                        <Storyboard BeginTime="00:00:00.500">
+                          <ColorAnimation 
+                            To="#FFDDDDDD" 
+                            Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" 
+                            Duration="0:0:.2"/>
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="TextBlock.MouseLeave">
+                      <BeginStoryboard>
+                        <Storyboard>
+                          <ColorAnimation 
+                            To="#FF232323" 
+                            Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" 
+                            Duration="0:0:.1"/>
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger>
+                  </TextBlock.Triggers>
+                </TextBlock>
+                <Button Content="E" Tag="{Binding Id}" Click="RecordEdit_Click" Style="{StaticResource CustomButtonStyle}" Grid.Column="3" Width="20" Height="20" Margin="5,0" Cursor="Hand" VerticalAlignment="Center"/>
+                <Button Content="C" Tag="{Binding Id}" Click="RecordCopy_Click" Style="{StaticResource CustomButtonStyle}" Grid.Column="4" Width="20" Height="20" Margin="5,0,10,0" Cursor="Hand" VerticalAlignment="Center"/>
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
 
-    </ListBox>
+        </ListBox>
+      </Grid>
+    </Grid>
   </Grid>
 </Window>
 
