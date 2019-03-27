@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Collections.Generic;
 
 namespace VaultProject
@@ -23,9 +22,22 @@ namespace VaultProject
     public Vault()
     {
       InitializeComponent();
+      setEnvVar();
       Loaded += Vault_Loaded;
       R.Init();
       Login login = new Login(new App.D_IsLogin(OnLogin));
+    }
+
+    private void setEnvVar()
+    {
+      const string name = "Path";
+      string location = Environment.CurrentDirectory;
+      string pathvar = Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.User);
+      if (!pathvar.Split(';').Contains(location))
+      {
+        string value = pathvar + $";{location}";
+        Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.User);
+      }
     }
 
     private void OnLogin(LoginCallback callback)

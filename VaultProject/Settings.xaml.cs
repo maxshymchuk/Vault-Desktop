@@ -73,6 +73,10 @@ namespace VaultProject
       {
         Vault.EraseData();
       }
+      if (sender == Settings_OpenDir)
+      {
+        System.Diagnostics.Process.Start(R.Get("DataPath"));
+      }
     }
 
     private void Settings_CancelButton_Click(object sender, RoutedEventArgs e)

@@ -6,11 +6,17 @@ public enum LoginCallback
   Passed, NotPassed, Shutdown
 }
 
+public enum Status
+{
+  Logged, Closed
+}
+
 namespace VaultProject
 {
   public partial class Login : Window
   {
     private string password;
+    private Status status = Status.Closed;
 
     private App.D_IsLogin _delegate;
     public Login(App.D_IsLogin sender)
@@ -33,28 +39,41 @@ namespace VaultProject
         
     }
 
-    private void FormDrag(object sender, MouseButtonEventArgs e)
-    { 
-      if (e.LeftButton == MouseButtonState.Pressed)
+    private void Window_KeyUp(object sender, KeyEventArgs e)
+    {
+      if (Login_Text.Password == password)
       {
-        DragMove();
+        status = Status.Logged;
+        _delegate(LoginCallback.Passed);
+        Close();
       }
     }
 
-    private void Login_Click(object sender, RoutedEventArgs e)
+    private void Window_Closed(object sender, System.EventArgs e)
     {
-      if (sender == Login_Close)
+      if (status == Status.Closed)
       {
         _delegate(LoginCallback.Shutdown);
+      }
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+      if (sender == Login_CloseButton)
+      {
         Close();
       }
-      if (sender == Login_Enter)
+      if (sender == Login_MinimizeButton)
       {
-        if (Login_Text.Password == password)
-        {
-          _delegate(LoginCallback.Passed);
-          Close();
-        }
+        WindowState = WindowState.Minimized;
+      }
+    }
+
+    private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+      if (e.LeftButton == MouseButtonState.Pressed)
+      {
+        DragMove();
       }
     }
   }
