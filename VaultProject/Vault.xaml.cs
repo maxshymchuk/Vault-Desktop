@@ -13,17 +13,15 @@ namespace VaultProject
   {
     private const int ID_LENGTH = 16;
 
-   // private int LogoutTimeout = 60000 * 5; // default 5 minutes
-
-    private Login login = null;
-
     public static ObservableCollection<Record> recordList { get; set; }
     public ObservableCollection<Record> checkedList { get; set; }
 
     private Record editableRecord = null;
     public static SFile file;
 
-    Settings settings = null;
+    private Settings settings = null;
+    private Login login = null;
+    private Timer timer = null;
 
     public Vault()
     {
@@ -71,6 +69,7 @@ namespace VaultProject
       {
         settings = null;
         IsEnabled = true;
+        StartTimer();
       }
     }
 
@@ -279,18 +278,24 @@ namespace VaultProject
       }
     }
 
+    private void StartTimer()
+    {
+      const uint coeff = 60000; // minutes to milliseconds
+      timer?.Stop();
+      timer = new Timer()
+      {
+        Enabled = true,
+        Interval = R.Get<int>("LogoutTimeout") * coeff,
+        AutoReset = false
+      };
+      timer.Elapsed += OnTimedEvent;
+    }
+
     private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
       if (Visibility == Visibility.Visible)
       {
-        const uint coeff = 60000; // minutes to milliseconds
-        Timer timer = new Timer()
-        {
-          Enabled = true,
-          Interval = R.Get<int>("LogoutTimeout") * coeff,
-          AutoReset = false
-        };
-        timer.Elapsed += OnTimedEvent;
+        StartTimer();
       }
     }
 
