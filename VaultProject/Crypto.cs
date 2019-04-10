@@ -31,7 +31,7 @@ namespace VaultProject
       var ivStringBytes = Generate256BitsOfRandomEntropy();
       var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
 
-      string secureWord = mode == CryptoMode.Password ? passWord : R.Get("SecureWord");
+      string secureWord = mode == CryptoMode.Password ? passWord : R.Get<string>("SecureWord");
 
       using (var password = new Rfc2898DeriveBytes(secureWord, saltStringBytes, DerivationIterations))
       {
@@ -75,7 +75,7 @@ namespace VaultProject
       // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
       var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
 
-      string secureWord = mode == CryptoMode.Password ? passWord : R.Get("SecureWord");
+      string secureWord = mode == CryptoMode.Password ? passWord : R.Get<string>("SecureWord");
 
       try
       {

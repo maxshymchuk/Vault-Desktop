@@ -4,12 +4,18 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace VaultProject
 {
   public partial class Vault : Window
   {
     private const int ID_LENGTH = 16;
+
+   // private int LogoutTimeout = 60000 * 5; // default 5 minutes
+
+    private Login login = null;
 
     public static ObservableCollection<Record> recordList { get; set; }
     public ObservableCollection<Record> checkedList { get; set; }
@@ -25,7 +31,7 @@ namespace VaultProject
       setEnvVar();
       Loaded += Vault_Loaded;
       R.Init();
-      Login login = new Login(new App.D_IsLogin(OnLogin));
+      login = new Login(new App.D_IsLogin(OnLogin));
     }
 
     private void setEnvVar()
@@ -56,6 +62,7 @@ namespace VaultProject
           Close();
           break;
       }
+      login = null;
     }
 
     private void OnSetupOver(bool isOver = false)
@@ -96,8 +103,9 @@ namespace VaultProject
     {
       // FILE STRUCTURE
       // id-of-element:note\tpass
-      file.name = R.Get("FileName");
-      F.CreateDir(file.path = R.Get("DataPath"));
+      file.name = R.Get<string>("FileName");
+      F.CreateDir(file.path = R.Get<string>("DataPath"));
+      //LogoutTimeout = R.Get<int>("LogoutTimeout");
       if (file.writer != null) file.writer.Close();
       file.reader = F.OpenFile(file.path, file.name, FMode.Read);
       recordList = new ObservableCollection<Record>();
@@ -194,7 +202,7 @@ namespace VaultProject
       }
       else if (sender == LogoutButton)
       {
-        Login login = new Login(new App.D_IsLogin(OnLogin));
+        login = new Login(new App.D_IsLogin(OnLogin));
       }
       else if (sender == SettingsButton)
       {
@@ -269,6 +277,28 @@ namespace VaultProject
       {
         listbox.ItemsSource = recordList;
       }
+    }
+
+    private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+      if (Visibility == Visibility.Visible)
+      {
+        const uint coeff = 60000; // minutes to milliseconds
+        Timer timer = new Timer()
+        {
+          Enabled = true,
+          Interval = R.Get<int>("LogoutTimeout") * coeff,
+          AutoReset = false
+        };
+        timer.Elapsed += OnTimedEvent;
+      }
+    }
+
+    private void OnTimedEvent(object sender, ElapsedEventArgs e)
+    {
+      Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => {
+        if (login == null) login = new Login(new App.D_IsLogin(OnLogin));
+      }));
     }
   }
 }

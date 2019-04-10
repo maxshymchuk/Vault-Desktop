@@ -23,7 +23,7 @@ namespace VaultProject
     {
       InitializeComponent();
       Login_Text.Focus();
-      password = Crypto.Decrypt(R.Get("Password"), CryptoMode.Password);
+      password = Crypto.Decrypt(R.Get<string>("Password"), CryptoMode.Password);
       _delegate = sender;
 
       if (password == "")

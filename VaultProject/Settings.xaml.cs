@@ -10,9 +10,10 @@ namespace VaultProject
     public Settings(App.D_IsSetupOver sender)
     {
       InitializeComponent();
-      Settings_DataPath.Text = R.Get("DataPath");
-      Settings_FileName.Text = R.Get("FileName");
-      Settings_PasswordBox.Password = Crypto.Decrypt(R.Get("Password"), CryptoMode.Password);
+      Settings_DataPath.Text = R.Get<string>("DataPath");
+      Settings_FileName.Text = R.Get<string>("FileName");
+      Settings_LogoutTimeout.Text = (R.Get<int>("LogoutTimeout")).ToString();
+      Settings_PasswordBox.Password = Crypto.Decrypt(R.Get<string>("Password"), CryptoMode.Password);
       Settings_AutoRunButton.Content = R.IsAutoRunSet() ? "UNSET" : "SET";
       _delegate = sender;
     }
@@ -23,6 +24,7 @@ namespace VaultProject
       {
         R.Set("DataPath", Settings_DataPath.Text);
         R.Set("FileName", Settings_FileName.Text);
+        R.Set("LogoutTimeout", System.Convert.ToInt32(Settings_LogoutTimeout.Text));
       }
       R.Set("Password", Crypto.Encrypt(Settings_PasswordBox.Password, CryptoMode.Password));
       Close();
@@ -75,7 +77,7 @@ namespace VaultProject
       }
       if (sender == Settings_OpenDir)
       {
-        System.Diagnostics.Process.Start(R.Get("DataPath"));
+        System.Diagnostics.Process.Start(R.Get<string>("DataPath"));
       }
     }
 

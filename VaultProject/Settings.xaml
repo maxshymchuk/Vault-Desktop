@@ -129,6 +129,19 @@
               <Button x:Name="Settings_OpenDir" Content="OPEN DIRECTORY" Click="Settings_ButtonClick" Height="26"  Margin="20,0"/>
             </Grid>
           </Grid>
+
+          <Grid x:Name="GridLine7" Margin="0,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+              <TextBlock Margin="20,0" Text="Logout Timeout, minutes" Background="{x:Null}" Foreground="White" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+              <TextBox Height="26" Margin="20,0" x:Name="Settings_LogoutTimeout" VerticalContentAlignment="Center"/>
+            </Grid>
+          </Grid>
         </StackPanel>
       </ScrollViewer>
     </Grid>

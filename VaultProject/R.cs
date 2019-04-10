@@ -19,6 +19,7 @@ namespace VaultProject
         key = Registry.CurrentUser.CreateSubKey(@"Software\Vault");
         Set("DataPath", $"{Environment.ExpandEnvironmentVariables("%appdata%")}\\Vault");
         Set("FileName", "data");
+        Set("LogoutTimeout", 5);
         Set("Password", Crypto.Encrypt("pass", CryptoMode.Password));
         Set("SecureWord", UsefulFunctions.GetUniqueKey(32));
       }
@@ -44,9 +45,15 @@ namespace VaultProject
       key.SetValue(name, value, RegistryValueKind.String);
     }
 
-    public static string Get(string name)
+    public static void Set(string name, int value)
     {
-      return key.GetValue(name).ToString();
+      key.SetValue(name, value, RegistryValueKind.DWord);
     }
+
+    public static T Get<T>(string name)
+    {
+      return (T)key.GetValue(name);
+    }
+
   }
 }

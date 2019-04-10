@@ -12,7 +12,7 @@
         MinWidth="600" 
         BorderThickness="0"
         Closing="Window_Closing" 
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" IsVisibleChanged="Window_IsVisibleChanged">
   <Grid Background="#FF363636">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="200"/>
