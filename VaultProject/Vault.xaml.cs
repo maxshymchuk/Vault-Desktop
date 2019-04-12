@@ -263,7 +263,7 @@ namespace VaultProject
       if (file.writer != null) file.writer.Close();
     }
 
-    private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+    private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {
       string word = (sender as TextBox).Text.ToLower();
       IEnumerable<Record> searchList = null;
@@ -304,6 +304,11 @@ namespace VaultProject
       Dispatcher.Invoke(DispatcherPriority.Background, new Action(() => {
         if (login == null) login = new Login(new App.D_IsLogin(OnLogin));
       }));
+    }
+
+    private void SearchBox_ClearButton_Click(object sender, RoutedEventArgs e)
+    {
+      SearchBox.Text = "";
     }
   }
 }
