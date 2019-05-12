@@ -69,7 +69,6 @@ namespace VaultProject
       {
         settings = null;
         IsEnabled = true;
-        StartTimer();
       }
     }
 
@@ -278,10 +277,15 @@ namespace VaultProject
       }
     }
 
+    private void StopTimer()
+    {
+      timer?.Stop();
+      timer = null;
+    }
     private void StartTimer()
     {
       const uint coeff = 60000; // minutes to milliseconds
-      timer?.Stop();
+      StopTimer();
       timer = new Timer()
       {
         Enabled = true,
@@ -289,14 +293,6 @@ namespace VaultProject
         AutoReset = false
       };
       timer.Elapsed += OnTimedEvent;
-    }
-
-    private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-    {
-      if (Visibility == Visibility.Visible)
-      {
-        StartTimer();
-      }
     }
 
     private void OnTimedEvent(object sender, ElapsedEventArgs e)
@@ -309,6 +305,16 @@ namespace VaultProject
     private void SearchBox_ClearButton_Click(object sender, RoutedEventArgs e)
     {
       SearchBox.Text = "";
+    }
+
+    private void Window_Activated(object sender, EventArgs e)
+    {
+      StopTimer();
+    }
+
+    private void Window_Deactivated(object sender, EventArgs e)
+    {
+      StartTimer();
     }
   }
 }
