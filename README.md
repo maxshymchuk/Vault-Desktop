@@ -1,6 +1,6 @@
 # VaultPC
 
-Simple analog to simple analog to 1Password for smartphones... Delicious!
+App to store your login-pass values
 
 ## Functions
 
@@ -9,4 +9,23 @@ Simple analog to simple analog to 1Password for smartphones... Delicious!
 * Coping to clipboard
 * Log in/Log out by password
 * Encrypting data
+* Planned/unplanned backup of data
 * Sync between devices in local network [in progress]
+
+## Screenshots
+
+* Login
+  
+  <img src="screenshots/login.png" width="200"/>
+
+* Vault 
+  
+  <img src="screenshots/vault.png" width="500"/>
+
+* Settings
+  
+  <img src="screenshots/settings.png" width="500"/>
+
+## See also
+
+I created similar app for mobile phones -> https://github.com/maxshymchuk/Vault
