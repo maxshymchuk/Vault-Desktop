@@ -18,7 +18,8 @@
     <Grid Grid.Row="1">
       <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
         <StackPanel>
-          <Grid x:Name="GridLine0" Margin="0,10">
+            
+          <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -35,11 +36,12 @@
                 <TextBox Height="26" Margin="20,0,0,0" x:Name="Settings_DataPath" VerticalContentAlignment="Center" IsReadOnly="True" IsUndoEnabled="False"/>
               </Grid>
               <Grid Grid.Column="1">
-                <Button x:Name="Settings_OpenDataPath" Margin="20,0" Width="30" Click="Settings_OpenDataPath_Click"  Content="..."/>
+                <Button x:Name="Settings_OpenDataPath" Margin="20,0" Width="30" Click="Settings_OpenPath_Click"  Content="..."/>
               </Grid>
             </Grid>
           </Grid>
-          <Grid x:Name="GridLine1" Margin="0,10">
+            
+          <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -52,7 +54,7 @@
             </Grid>
           </Grid>
 
-          <Grid x:Name="GridLine2" Margin="0,10">
+          <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -64,7 +66,8 @@
               <PasswordBox Height="26" x:Name="Settings_PasswordBox" VerticalContentAlignment="Center" Margin="20,0"/>
             </Grid>
           </Grid>
-          <Grid x:Name="GridLine3" Margin="0,10">
+            
+          <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -80,7 +83,8 @@
               <Button x:Name="Settings_SecureWordButton" Click="Settings_ButtonClick" Content="UPDATE SECURE CODE" Height="26"  Margin="20,0"/>
             </Grid>
           </Grid>
-          <Grid x:Name="GridLine4" Margin="0,10">
+            
+          <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -96,7 +100,8 @@
               <Button x:Name="Settings_AutoRunButton" Click="Settings_ButtonClick" Content="SET" Height="26"  Margin="20,0"/>
             </Grid>
           </Grid>
-          <Grid x:Name="GridLine5" Margin="0,10">
+            
+          <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -113,7 +118,7 @@
             </Grid>
           </Grid>
 
-          <Grid x:Name="GridLine6" Margin="0,10">
+          <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -130,7 +135,7 @@
             </Grid>
           </Grid>
 
-          <Grid x:Name="GridLine7" Margin="0,10">
+          <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -142,9 +147,63 @@
               <TextBox Height="26" Margin="20,0" x:Name="Settings_LogoutTimeout" VerticalContentAlignment="Center"/>
             </Grid>
           </Grid>
+            
+          <Grid Margin="0,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+              <TextBlock Margin="20,0" Text="Backup Path" Background="{x:Null}" Foreground="White" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+              </Grid.ColumnDefinitions>
+              <Grid Grid.Column="0">
+                <TextBox Height="26" Margin="20,0,0,0" x:Name="Settings_BackupPath" VerticalContentAlignment="Center" IsReadOnly="True" IsUndoEnabled="False"/>
+              </Grid>
+              <Grid Grid.Column="1">
+                <Button x:Name="Settings_OpenBackupPath" Margin="20,0" Width="30" Click="Settings_OpenPath_Click"  Content="..."/>
+              </Grid>
+            </Grid>
+          </Grid>
+            
+          <Grid Margin="0,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+              <TextBlock Margin="20,0" Text="Backup Interval, days" Background="{x:Null}" Foreground="White" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+              <TextBox Height="26" Margin="20,0" x:Name="Settings_BackupInterval" VerticalContentAlignment="Center"/>
+            </Grid>
+          </Grid>
+            
+          <Grid Margin="0,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+              <TextBlock VerticalAlignment="Center" Margin="20,0" Background="{x:Null}" Foreground="White" TextWrapping="Wrap">
+                <TextBlock.Text>
+                  Create unplanned backup of data
+                </TextBlock.Text>
+              </TextBlock>
+            </Grid>
+            <Grid Grid.Column="1">
+              <Button x:Name="Settings_UnplannedBackup" Content="BACKUP" Click="Settings_ButtonClick" Height="26"  Margin="20,0"/>
+            </Grid>
+          </Grid>            
+            
         </StackPanel>
       </ScrollViewer>
     </Grid>
+      
     <Grid Grid.Row="2" Height="40">
       <Grid.ColumnDefinitions>
         <ColumnDefinition/>

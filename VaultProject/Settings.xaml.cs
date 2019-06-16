@@ -7,6 +7,7 @@ namespace VaultProject
   {
 
     private App.D_IsSetupOver _delegate;
+
     public Settings(App.D_IsSetupOver sender)
     {
       InitializeComponent();
@@ -14,23 +15,25 @@ namespace VaultProject
       Settings_FileName.Text = R.Get<string>("FileName");
       Settings_LogoutTimeout.Text = (R.Get<int>("LogoutTimeout")).ToString();
       Settings_PasswordBox.Password = Crypto.Decrypt(R.Get<string>("Password"), CryptoMode.Password);
+      Settings_BackupPath.Text = R.Get<string>("BackupPath");
+      Settings_BackupInterval.Text = (R.Get<int>("BackupInterval")).ToString();
       Settings_AutoRunButton.Content = R.IsAutoRunSet() ? "UNSET" : "SET";
       _delegate = sender;
     }
 
     private void Settings_ConfirmButton_Click(object sender, RoutedEventArgs e)
     {
-      if (Settings_DataPath.Text != "")
-      {
-        R.Set("DataPath", Settings_DataPath.Text);
-        R.Set("FileName", Settings_FileName.Text);
-        R.Set("LogoutTimeout", System.Convert.ToInt32(Settings_LogoutTimeout.Text));
-      }
+      dynamic defs = R.Default();
+      R.Set("DataPath", Settings_DataPath.Text != "" ? Settings_DataPath.Text : defs.DataPath);
+      R.Set("FileName", Settings_FileName.Text != "" ? Settings_FileName.Text : defs.FileName);
+      R.Set("LogoutTimeout", Settings_LogoutTimeout.Text != "" ? System.Convert.ToInt32(Settings_LogoutTimeout.Text) : defs.LogoutTimeout);
+      R.Set("BackupPath", Settings_BackupPath.Text != "" ? Settings_BackupPath.Text : defs.BackupPath);
+      R.Set("BackupInterval", Settings_BackupInterval.Text != "" ? System.Convert.ToInt32(Settings_BackupInterval.Text) : defs.BackupInterval);
       R.Set("Password", Crypto.Encrypt(Settings_PasswordBox.Password, CryptoMode.Password));
       Close();
     }
 
-    private void Settings_OpenDataPath_Click(object sender, RoutedEventArgs e)
+    private void Settings_OpenPath_Click(object sender, RoutedEventArgs e)
     {
       CommonOpenFileDialog dlg = new CommonOpenFileDialog
       {
@@ -46,7 +49,14 @@ namespace VaultProject
       if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
       {
         string folder = dlg.FileName;
-        Settings_DataPath.Text = folder;
+        if (sender == Settings_OpenBackupPath)
+        {
+          Settings_BackupPath.Text = folder;
+        }
+        if (sender == Settings_OpenDataPath)
+        {
+          Settings_DataPath.Text = folder;
+        }
       }
     }
 
@@ -79,6 +89,10 @@ namespace VaultProject
       {
         System.Diagnostics.Process.Start(R.Get<string>("DataPath"));
       }
+      if (sender == Settings_UnplannedBackup)
+      {
+        Vault.UnplannedBackup();
+      }
     }
 
     private void Settings_CancelButton_Click(object sender, RoutedEventArgs e)
@@ -90,6 +104,7 @@ namespace VaultProject
     {
       _delegate(true);
     }
+
   }
 }
 

@@ -16,10 +16,14 @@ namespace VaultProject
 
       if (key == null)
       {
+        dynamic defs = Default();
         key = Registry.CurrentUser.CreateSubKey(@"Software\Vault");
-        Set("DataPath", $"{Environment.ExpandEnvironmentVariables("%appdata%")}\\Vault");
-        Set("FileName", "data");
-        Set("LogoutTimeout", 5);
+        Set("DataPath", defs.DataPath);
+        Set("FileName", defs.FileName);
+        Set("LogoutTimeout", defs.LogoutTimeout);
+        Set("BackupPath", defs.BackupPath);
+        Set("BackupInterval", defs.BackupInterval);
+        Set("LastBackup", DateTime.Now.ToString());
         Set("Password", Crypto.Encrypt("pass", CryptoMode.Password));
         Set("SecureWord", UsefulFunctions.GetUniqueKey(32));
       }
@@ -53,6 +57,17 @@ namespace VaultProject
     public static T Get<T>(string name)
     {
       return (T)key.GetValue(name);
+    }
+
+    public static object Default()
+    {
+      return new {
+        DataPath = $"{Environment.ExpandEnvironmentVariables("%appdata%")}\\Vault",
+        FileName = "data",
+        LogoutTimeout = 5,
+        BackupPath = $"{Environment.ExpandEnvironmentVariables("%HOMEPATH%")}",
+        BackupInterval = 7
+      };
     }
 
   }

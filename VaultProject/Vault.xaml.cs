@@ -21,7 +21,8 @@ namespace VaultProject
 
     private Settings settings = null;
     private Login login = null;
-    private Timer timer = null;
+    private Timer logoutTimer = null;
+    private Timer backupTimer = null;
 
     public Vault()
     {
@@ -103,7 +104,6 @@ namespace VaultProject
       // id-of-element:note\tpass
       file.name = R.Get<string>("FileName");
       F.CreateDir(file.path = R.Get<string>("DataPath"));
-      //LogoutTimeout = R.Get<int>("LogoutTimeout");
       if (file.writer != null) file.writer.Close();
       file.reader = F.OpenFile(file.path, file.name, FMode.Read);
       recordList = new ObservableCollection<Record>();
@@ -130,6 +130,13 @@ namespace VaultProject
       checkedList = new ObservableCollection<Record>();
       listbox.ItemsSource = recordList;
       UpdateStatus();
+      backupTimer = new Timer()
+      {
+        Enabled = true,
+        Interval = 10,
+        AutoReset = false
+      };
+      backupTimer.Elapsed += Backup;
     }
 
     public static void RewriteFile()
@@ -277,22 +284,40 @@ namespace VaultProject
       }
     }
 
-    private void StopTimer()
+    public static void UnplannedBackup()
     {
-      timer?.Stop();
-      timer = null;
+      System.IO.File.Copy(
+        $"{R.Get<string>("DataPath")}\\{R.Get<string>("FileName")}",
+        $"{R.Get<string>("BackupPath")}\\{R.Get<string>("FileName")}_backup_{DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss")}_{R.Get<string>("SecureWord")}"
+      );
     }
-    private void StartTimer()
+    private void Backup(object sender, ElapsedEventArgs e)
+    {
+      (sender as Timer).Interval = 1 * 3600000; // 1 hour
+      DateTime lastBackupTime = Convert.ToDateTime(R.Get<string>("LastBackup"));
+      DateTime currentTime = DateTime.Now;
+      if ((currentTime - lastBackupTime).TotalDays >= R.Get<int>("BackupInterval"))
+      {
+        UnplannedBackup();
+        R.Set("LastBackup", DateTime.Now.ToString());
+      }
+    }
+    private void StopLogoutTimer()
+    {
+      logoutTimer?.Stop();
+      logoutTimer = null;
+    }
+    private void StartLogoutTimer()
     {
       const uint coeff = 60000; // minutes to milliseconds
-      StopTimer();
-      timer = new Timer()
+      StopLogoutTimer();
+      logoutTimer = new Timer()
       {
         Enabled = true,
         Interval = R.Get<int>("LogoutTimeout") * coeff,
         AutoReset = false
       };
-      timer.Elapsed += OnTimedEvent;
+      logoutTimer.Elapsed += OnTimedEvent;
     }
 
     private void OnTimedEvent(object sender, ElapsedEventArgs e)
@@ -309,12 +334,12 @@ namespace VaultProject
 
     private void Window_Activated(object sender, EventArgs e)
     {
-      StopTimer();
+      StopLogoutTimer();
     }
 
     private void Window_Deactivated(object sender, EventArgs e)
     {
-      StartTimer();
+      StartLogoutTimer();
     }
   }
 }
