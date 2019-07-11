@@ -24,7 +24,7 @@ namespace Vault
       };
       trayIcon.MouseClick += (object sender, System.Windows.Forms.MouseEventArgs e) =>
       {
-        _target.ShowInTaskbar = true;
+        _target.Show();
         _target.WindowState = WindowState.Normal;
         _target.Activate();
         Hide();

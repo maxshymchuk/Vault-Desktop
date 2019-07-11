@@ -348,7 +348,7 @@ namespace VaultProject
     {
       if (WindowState == WindowState.Minimized)
       {
-        ShowInTaskbar = false;
+        Hide();
         TrayIcon.Show(sender);
       }
     }
