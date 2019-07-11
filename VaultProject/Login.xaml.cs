@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
+using Vault;
 
 public enum LoginCallback
 {
@@ -74,6 +76,15 @@ namespace VaultProject
       if (e.LeftButton == MouseButtonState.Pressed)
       {
         DragMove();
+      }
+    }
+
+    public void Window_StateChanged(object sender, EventArgs e)
+    {
+      if (WindowState == WindowState.Minimized)
+      {
+        ShowInTaskbar = false;
+        TrayIcon.Show(sender);
       }
     }
   }

@@ -18,11 +18,11 @@
         Padding="0"
         Margin="0"
         BorderThickness="3"
-        BorderBrush="#262626">
+        BorderBrush="#262626" StateChanged="Window_StateChanged">
   <Grid>
     <Grid.Background>
       <ImageBrush
-        ImageSource="/vault.png"
+        ImageSource="images/vault.png"
         Stretch="Uniform"
         AlignmentY="Top" AlignmentX="Left">
         <ImageBrush.Transform>

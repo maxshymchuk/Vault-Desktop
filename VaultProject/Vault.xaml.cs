@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Timers;
 using System.Windows.Threading;
+using Vault;
 
 namespace VaultProject
 {
@@ -29,6 +30,7 @@ namespace VaultProject
       InitializeComponent();
       setEnvVar();
       Loaded += Vault_Loaded;
+      TrayIcon.Init();
       R.Init();
       login = new Login(new App.D_IsLogin(OnLogin));
     }
@@ -112,11 +114,9 @@ namespace VaultProject
         string decryptResult = Crypto.Decrypt(file.reader.ReadLine());
         if (decryptResult != "")
         {
-          var (id, note, pass) = (
-            decryptResult.Substring(0, ID_LENGTH),
-            decryptResult.Substring(ID_LENGTH + 1, decryptResult.IndexOf('\t') - ID_LENGTH - 1),
-            decryptResult.Substring(decryptResult.IndexOf('\t') + 1)
-          );
+          string id = decryptResult.Substring(0, ID_LENGTH);
+          string note = decryptResult.Substring(ID_LENGTH + 1, decryptResult.IndexOf('\t') - ID_LENGTH - 1);
+          string pass = decryptResult.Substring(decryptResult.IndexOf('\t') + 1);
           recordList.Add(new Record() { Id = id, Note = note, Pass = pass });
         }
         else
@@ -166,7 +166,9 @@ namespace VaultProject
       {
         if (NoteText.Text != "" && PassText.Password != "")
         {
-          var (id, note, pass) = (UsefulFunctions.GetUniqueKey(ID_LENGTH), NoteText.Text, PassText.Password);
+          string id = UsefulFunctions.GetUniqueKey(ID_LENGTH);
+          string note = NoteText.Text;
+          string pass = PassText.Password;
           recordList.Add(new Record() { Id = id, Note = note, Pass = pass });
 
           file.writer.WriteLine(Crypto.Encrypt($"{id}:{note}\t{pass}"));
@@ -340,6 +342,15 @@ namespace VaultProject
     private void Window_Deactivated(object sender, EventArgs e)
     {
       StartLogoutTimer();
+    }
+
+    public void Window_StateChanged(object sender, EventArgs e)
+    {
+      if (WindowState == WindowState.Minimized)
+      {
+        ShowInTaskbar = false;
+        TrayIcon.Show(sender);
+      }
     }
   }
 }
