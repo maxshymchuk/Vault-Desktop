@@ -1,6 +1,6 @@
 # VaultPC
 
-App to store your login-pass values
+Simple app to store login-pass values
 
 ## Functions
 
