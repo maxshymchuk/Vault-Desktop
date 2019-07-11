@@ -18,7 +18,7 @@
         Padding="0"
         Margin="0"
         BorderThickness="3"
-        BorderBrush="#262626" StateChanged="Window_StateChanged">
+        BorderBrush="#262626" StateChanged="Window_StateChanged" Loaded="Window_Loaded">
   <Grid>
     <Grid.Background>
       <ImageBrush

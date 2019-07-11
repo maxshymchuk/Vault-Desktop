@@ -109,6 +109,23 @@
             <Grid Grid.Column="0">
               <TextBlock VerticalAlignment="Center" Margin="20,0" Background="{x:Null}" Foreground="White" TextWrapping="Wrap">
                 <TextBlock.Text>
+                  AutoRun Window Mode
+                </TextBlock.Text>
+              </TextBlock>
+            </Grid>
+            <Grid Grid.Column="1">
+              <Button x:Name="Settings_AutoRunMode" Click="Settings_ButtonClick" Content="SET" Height="26"  Margin="20,0"/>
+            </Grid>
+          </Grid>
+            
+          <Grid Margin="0,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+              <TextBlock VerticalAlignment="Center" Margin="20,0" Background="{x:Null}" Foreground="White" TextWrapping="Wrap">
+                <TextBlock.Text>
                   It will delete ALL your data, be careful
                 </TextBlock.Text>
               </TextBlock>

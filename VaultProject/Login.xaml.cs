@@ -18,7 +18,7 @@ namespace VaultProject
   public partial class Login : Window
   {
     private string password;
-    private Status status = Status.Closed;
+    private Status status;
 
     private App.D_IsLogin _delegate;
     public Login(App.D_IsLogin sender)
@@ -63,6 +63,7 @@ namespace VaultProject
     {
       if (sender == Login_CloseButton)
       {
+        status = Status.Closed;
         Close();
       }
       if (sender == Login_MinimizeButton)
@@ -86,6 +87,11 @@ namespace VaultProject
         ShowInTaskbar = false;
         TrayIcon.Show(sender);
       }
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+      WindowState = R.Get<string>("AutoRunWindowMode") == WindowState.Minimized.ToString() ? WindowState.Minimized : WindowState.Normal;
     }
   }
 }

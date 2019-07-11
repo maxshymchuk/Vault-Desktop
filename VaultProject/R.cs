@@ -26,6 +26,7 @@ namespace VaultProject
         Set("LastBackup", DateTime.Now.ToString());
         Set("Password", Crypto.Encrypt("pass", CryptoMode.Password));
         Set("SecureWord", UsefulFunctions.GetUniqueKey(32));
+        Set("AutoRunWindowMode", WindowState.Normal.ToString());
       }
     }
 
@@ -66,7 +67,8 @@ namespace VaultProject
         FileName = "data",
         LogoutTimeout = 5,
         BackupPath = $"{Environment.ExpandEnvironmentVariables("%HOMEPATH%")}",
-        BackupInterval = 7
+        BackupInterval = 7,
+        AutoRunWindowMode = WindowState.Normal.ToString()
       };
     }
 

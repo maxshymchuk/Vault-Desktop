@@ -18,6 +18,7 @@ namespace VaultProject
       Settings_BackupPath.Text = R.Get<string>("BackupPath");
       Settings_BackupInterval.Text = (R.Get<int>("BackupInterval")).ToString();
       Settings_AutoRunButton.Content = R.IsAutoRunSet() ? "UNSET" : "SET";
+      Settings_AutoRunMode.Content = R.Get<string>("AutoRunWindowMode");
       _delegate = sender;
     }
 
@@ -30,6 +31,7 @@ namespace VaultProject
       R.Set("BackupPath", Settings_BackupPath.Text != "" ? Settings_BackupPath.Text : defs.BackupPath);
       R.Set("BackupInterval", Settings_BackupInterval.Text != "" ? System.Convert.ToInt32(Settings_BackupInterval.Text) : defs.BackupInterval);
       R.Set("Password", Crypto.Encrypt(Settings_PasswordBox.Password, CryptoMode.Password));
+      R.Set("AutoRunWindowMode", Settings_AutoRunMode.Content.ToString());
       Close();
     }
 
@@ -92,6 +94,10 @@ namespace VaultProject
       if (sender == Settings_UnplannedBackup)
       {
         Vault.UnplannedBackup();
+      }
+      if (sender == Settings_AutoRunMode)
+      {
+        Settings_AutoRunMode.Content = Settings_AutoRunMode.Content.ToString() == WindowState.Minimized.ToString() ? WindowState.Normal.ToString() : WindowState.Minimized.ToString();
       }
     }
 
