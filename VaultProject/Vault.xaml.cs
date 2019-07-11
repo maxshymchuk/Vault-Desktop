@@ -6,7 +6,6 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Vault;
 
 namespace VaultProject
 {
@@ -14,6 +13,7 @@ namespace VaultProject
   {
     private const int ID_LENGTH = 16;
 
+    public static bool isAutorun = false;
     public static ObservableCollection<Record> recordList { get; set; }
     public ObservableCollection<Record> checkedList { get; set; }
 
@@ -64,6 +64,10 @@ namespace VaultProject
           break;
       }
       login = null;
+      if (!isAutorun && Crypto.Decrypt(R.Get<string>("Password"), CryptoMode.Password) == "")
+      {
+        WindowState = R.Get<string>("AutoRunWindowMode") == WindowState.Minimized.ToString() ? WindowState.Minimized : WindowState.Normal;
+      }
     }
 
     private void OnSetupOver(bool isOver = false)

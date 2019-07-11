@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Forms;
 
-namespace Vault
+namespace VaultProject
 {
   class TrayIcon
   {
@@ -35,6 +35,7 @@ namespace Vault
     {
       _target = target as Window;
       trayIcon.Visible = true;
+      Vault.isAutorun = true;
     }
 
     public static void Hide()

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using Vault;
 
 public enum LoginCallback
 {
@@ -91,7 +90,10 @@ namespace VaultProject
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-      WindowState = R.Get<string>("AutoRunWindowMode") == WindowState.Minimized.ToString() ? WindowState.Minimized : WindowState.Normal;
+      if (!Vault.isAutorun)
+      {
+        WindowState = R.Get<string>("AutoRunWindowMode") == WindowState.Minimized.ToString() ? WindowState.Minimized : WindowState.Normal;
+      }
     }
   }
 }
