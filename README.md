@@ -1,4 +1,4 @@
-# VaultPC
+# Vault Desktop
 
 Simple app to store login-pass values
 
