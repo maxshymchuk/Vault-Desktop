@@ -1,6 +1,6 @@
 # Vault Desktop
 
-Simple app to store login-pass values
+Deprecated password storage app
 
 ## Functions
 
@@ -10,7 +10,6 @@ Simple app to store login-pass values
 * Log in/Log out by password
 * Encrypting data
 * Planned/unplanned backup of data
-* Sync between devices in local network [in progress]
 
 ## Screenshots
 
@@ -25,7 +24,3 @@ Simple app to store login-pass values
 * Settings
   
   <img src="screenshots/settings.png" width="500"/>
-
-## See also
-
-I created similar app for mobile phones -> https://github.com/maxshymchuk/Vault
