@@ -190,11 +190,6 @@ namespace VaultProject
         checkedList = new ObservableCollection<Record>();
         RewriteFile();
       }
-      else if (sender == SyncButton)
-      {
-        //var wc = new WebClient();
-        //wc.DownloadFile("https://b5wliw.db.files.1drv.com/y4mhh9ejh9k50uGN-Dnrd7AFP9fMfavttXYklwf5x6rQxg5p6ceQU1ZAC_WyNLNAsp248lMIf1ODeMJVVvG07X40ZNbhhLAKeINUTYrhpgZSyzomGKyIBfzeG9I0_1w-mJXi9PWTXksYwIQwsjgZmE-gW1yXPot61BSPw4nygG1IWY5W5zfExzAXXZZN8RsJOzS/list.txt?download&psid=1", "text.txt");
-      }
       else if (sender == SelectButton && recordList != null)
       {
         foreach (Record rec in recordList)
@@ -299,7 +294,7 @@ namespace VaultProject
     }
     private void Backup(object sender, ElapsedEventArgs e)
     {
-      (sender as Timer).Interval = 1 * 3600000; // 1 hour
+      (sender as Timer).Interval = 10000; // 10 sec
       DateTime lastBackupTime = Convert.ToDateTime(R.Get<string>("LastBackup"));
       DateTime currentTime = DateTime.Now;
       if ((currentTime - lastBackupTime).TotalDays >= R.Get<int>("BackupInterval"))

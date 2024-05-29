@@ -113,7 +113,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
-                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button 
               x:Name="SettingsButton"
@@ -123,16 +122,8 @@
               Cursor="Hand"
               Click="Button_Click"/>
                 <Button 
-              x:Name="SyncButton"
-              IsEnabled="False"
-              Grid.Column="1"
-              Content="Sync" 
-              BorderThickness="0"
-              Cursor="Hand"
-              Click="Button_Click"/>
-                <Button 
               x:Name="LogoutButton"
-              Grid.Column="3"
+              Grid.Column="1"
               Content="Logout" 
               BorderThickness="0"
               Cursor="Hand"

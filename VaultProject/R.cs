@@ -66,7 +66,7 @@ namespace VaultProject
         DataPath = $"{Environment.ExpandEnvironmentVariables("%appdata%")}\\Vault",
         FileName = "data",
         LogoutTimeout = 5,
-        BackupPath = $"{Environment.ExpandEnvironmentVariables("%HOMEPATH%")}",
+        BackupPath = $"{Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%")}",
         BackupInterval = 7,
         AutoRunWindowMode = WindowState.Normal.ToString()
       };
