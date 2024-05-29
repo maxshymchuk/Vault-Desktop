@@ -1,15 +1,17 @@
 # Vault Desktop
 
-Deprecated password storage app
+Desktop password storage app. Local. Secure.
 
-## Functions
+## Features
 
-* Adding/Editing/Deleting note-pass value
-* Searching by key word
-* Coping to clipboard
-* Log in/Log out by password
-* Encrypting data
+* Add/edit/delete note-pass values
+* Visually hidden passwords
+* Search by key word
+* Copy to clipboard
+* Log in/out by password
+* Encrypted data
 * Planned/unplanned backup of data
+* Autorun
 
 ## Screenshots
 
